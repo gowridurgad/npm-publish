@@ -1,6 +1,5 @@
 {
-  "name": "@gowri48/npm-publish
-",
+  "name": "@gowri48/npm-publish",
   "version": "0.0.1",
   "private": false,
   "main": "index.js",
