@@ -13,9 +13,7 @@
     "access": "public"
    
   },
-  "dependencies": {
-    "jest": "^29.6.1"
-  },
+
   "engines": {
     "node": ">=18"
   }
