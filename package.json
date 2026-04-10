@@ -1,21 +1,23 @@
 {
-  "name": "@gowri48/npm-publish",
-  "version": "0.0.1",
-  "private": false,
-  "main": "index.js",
-  "scripts": {
-    "test": "node -e \"console.log('ok')\""
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "Repro package for testing npm OIDC + actions/setup-node behavior",
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gowridurgad/npm-publish.git"
-  }
+  "name": "@gowri48/npmpublish",
+  "version": "0.0.8",
+  "description": "Your package description",
+  "main": "index.js",
+  "repository": "github:gowridurgad/test-setup-node",
+  "author": "gowridurgad",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+    
+  },
+  "dependencies": {
+    "jest": "^29.6.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
 }
