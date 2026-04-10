@@ -1,5 +1,8 @@
 name: testing1440
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
