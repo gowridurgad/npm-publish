@@ -11,7 +11,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true
+   
     
   },
   "dependencies": {
