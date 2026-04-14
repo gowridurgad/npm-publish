@@ -15,15 +15,15 @@ jobs:
       - name: Setup Node with registry-url (no token provided)
         uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
-          node-version: '12'
+          node-version: '14'
           registry-url: 'https://registry.npmjs.org'
           
 
       - name: Show .npmrc contents
         run: cat $NPM_CONFIG_USERCONFIG
 
-      - name: npm install (this will fail without dummy token)
-        run: pnpm add lodash --dry-run
+      - name: pnpm install (this will fail without dummy token)
+        run: pnpm install
     
 
 
