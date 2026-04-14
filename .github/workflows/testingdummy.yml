@@ -10,12 +10,12 @@ jobs:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
         with:
-            version: 4
+            version: 7
 
       - name: Setup Node with registry-url (no token provided)
         uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
-          node-version: '12'
+          node-version: '14'
           registry-url: 'https://registry.npmjs.org'
           
 
@@ -24,16 +24,3 @@ jobs:
 
       - name: pnpm install (this will fail without dummy token)
         run: pnpm install
-    
-
-
-
-
-
-
-
-
-
-
-
-
