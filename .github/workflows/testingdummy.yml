@@ -1,4 +1,4 @@
-name: TestDummyToken
+name: withoutdummy-pnpm
 
 on:
   workflow_dispatch:
