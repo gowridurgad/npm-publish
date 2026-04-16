@@ -1,0 +1,26 @@
+name: testing-pnpm(1477)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  no-token-fails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+            version: 7
+
+      - name: Setup Node with registry-url (no token provided)
+        uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org'
+          
+
+      - name: Show .npmrc contents
+        run: cat $NPM_CONFIG_USERCONFIG
+
+      - name: pnpm install (this will fail without dummy token)
+        run: pnpm install
