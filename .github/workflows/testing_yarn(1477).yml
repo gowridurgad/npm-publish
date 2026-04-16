@@ -21,10 +21,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
-          
-
-      - name: Show .npmrc contents
-        run: cat $NPM_CONFIG_USERCONFIG
 
       - name: yarn install 
         run: yarn add lodash --dry-run
