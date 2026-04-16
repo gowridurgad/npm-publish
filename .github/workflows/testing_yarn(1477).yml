@@ -1,4 +1,4 @@
-name: testing-pnpm(1477)
+name: testing-yarn(1477)
 
 on:
   workflow_dispatch:
