@@ -19,16 +19,14 @@ jobs:
           corepack prepare yarn@2.4.3 --activate
           yarn --version
 
-      # - name: Set Yarn version
-      #   run: yarn set version stable
 
-      # - name: Configure npmjs registry auth
-      #   run: |
-      #     yarn config set npmRegistryServer "https://registry.npmjs.org"
-      #     yarn config set npmAlwaysAuth true
-      #     yarn config set npmAuthToken $NPM_AUTH_TOKEN
-      #   env:
-      #     NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Configure npmjs registry auth
+        run: |
+          yarn config set npmRegistryServer "https://registry.npmjs.org"
+          yarn config set npmAlwaysAuth true
+          yarn config set npmAuthToken $NPM_AUTH_TOKEN
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install dependencies
         run: yarn install --no-immutable
