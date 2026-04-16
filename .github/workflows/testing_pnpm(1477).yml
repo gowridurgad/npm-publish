@@ -4,23 +4,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  no-token-fails:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ${{ matrix.os-version }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22, 24]
+        os-version: [ubuntu-latest, windows-latest, macos-latest]
+        
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
         with:
-            version: 7
+            version: 10
 
-      - name: Setup Node with registry-url (no token provided)
+      - name: Setup Node (${{ matrix.node-version }}) 
         uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
-          node-version: '14'
+          node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
-          
-
-      - name: Show .npmrc contents
-        run: cat $NPM_CONFIG_USERCONFIG
-
-      - name: pnpm install (this will fail without dummy token)
+        
+      - name: pnpm install 
         run: pnpm install
