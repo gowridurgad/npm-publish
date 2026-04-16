@@ -5,14 +5,20 @@ on:
 
 jobs:
   no-token-fails:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os-version }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22, 24]
+        os-version: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v5
 
-      - name: Setup Node
+      - name: Setup Node (${{ matrix.node-version }})
         uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
-          node-version: '24'
+          node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
 
       - name: npm install (this will fail without dummy token)
