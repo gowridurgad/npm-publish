@@ -28,7 +28,7 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install 
 
       - name: Publish
         run: yarn npm publish
