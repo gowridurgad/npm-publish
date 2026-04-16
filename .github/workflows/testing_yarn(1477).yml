@@ -4,36 +4,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v5
 
-      - name: Setup Node
-        uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+      - uses: actions/setup-node@v6
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
 
-      - name: Enable Corepack + select Yarn version
-        run: |
-          corepack enable
-          corepack prepare yarn@2.4.3 --activate
-          yarn --version
+      - name: Enable Corepack (for Yarn 2+)
+        run: corepack enable
 
-      - name: Setup .yarnrc.yml (only needed for GitHub Packages private scope)
+      - name: Set Yarn version
+        run: yarn set version stable
+
+      - name: Configure npmjs registry auth
         run: |
-            yarn config set npmScopes.gowri48.npmRegistryServer "https://npm.pkg.github.com"
-            yarn config set npmScopes.gowri48.npmAlwaysAuth true
-            yarn config set npmScopes.gowri48.npmAuthToken "${NPM_AUTH_TOKEN}"
+          yarn config set npmRegistryServer "https://registry.npmjs.org"
+          yarn config set npmAlwaysAuth true
+          yarn config set npmAuthToken $NPM_AUTH_TOKEN
         env:
-              NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Install (recommended before publish)
+      - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Publish with Yarn Berry
+      - name: Publish
         run: yarn npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
