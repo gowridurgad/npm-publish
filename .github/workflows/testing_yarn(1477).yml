@@ -27,7 +27,7 @@ jobs:
             yarn config set npmScopes.gowri48.npmRegistryServer "https://npm.pkg.github.com"
             yarn config set npmScopes.gowri48.npmAlwaysAuth true
             yarn config set npmScopes.gowri48.npmAuthToken "${NPM_AUTH_TOKEN}"
-       env:
+        env:
               NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install (recommended before publish)
