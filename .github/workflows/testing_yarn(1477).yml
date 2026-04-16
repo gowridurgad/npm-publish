@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-        
+    
     steps:
       - uses: actions/checkout@v5
 
@@ -14,12 +14,18 @@ jobs:
         uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
           node-version: '24'
-          registry-url: 'https://npm.pkg.github.com'
-        
-      - run: yarn publish
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Enable Corepack + select Yarn version
+        run: |
+          corepack enable
+          corepack prepare yarn@2.4.3 --activate
+          yarn --version
+
+      - name: Install (recommended before publish)
+        run: yarn install --immutable
+
+      - name: Publish with Yarn Berry
+        run: yarn npm publish
         env:
-           NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-
-
-
-           
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
