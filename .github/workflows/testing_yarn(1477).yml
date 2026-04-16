@@ -22,6 +22,14 @@ jobs:
           corepack prepare yarn@2.4.3 --activate
           yarn --version
 
+      - name: Setup .yarnrc.yml (only needed for GitHub Packages private scope)
+        run: |
+            yarn config set npmScopes.gowri48.npmRegistryServer "https://npm.pkg.github.com"
+            yarn config set npmScopes.gowri48.npmAlwaysAuth true
+            yarn config set npmScopes.gowri48.npmAuthToken "${NPM_AUTH_TOKEN}"
+       env:
+              NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Install (recommended before publish)
         run: yarn install --immutable
 
