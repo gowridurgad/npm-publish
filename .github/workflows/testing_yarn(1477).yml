@@ -42,11 +42,11 @@ jobs:
         run: yarn set version 3.6.4
       - name: Yarn version
         run: yarn --version
-      - name: Generate simple .yarnrc.yml
-        run: |
-          echo "nodeLinker: node-modules" >> .yarnrc.yml
-      - name: Generate yarn file
-        run: yarn install
+      # - name: Generate simple .yarnrc.yml
+      #   run: |
+      #     echo "nodeLinker: node-modules" >> .yarnrc.yml
+      # - name: Generate yarn file
+      #   run: yarn install
       - name: Remove dependencies
         shell: pwsh
         run: Remove-Item node_modules -Force -Recurse
