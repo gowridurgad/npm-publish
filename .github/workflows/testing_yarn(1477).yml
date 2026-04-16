@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Setup Node (${{ matrix.node-version }})
-        # uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+        # uses: gowridurgad/setup-node@dummy-token-removal
         uses: actions/setup-node@v6
         
         with:
