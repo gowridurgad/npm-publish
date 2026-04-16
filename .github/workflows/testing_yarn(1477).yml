@@ -14,8 +14,12 @@ jobs:
         uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://npm.pkg.github.com'
         
       - run: yarn publish
         env:
-           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+           NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+
+
+
+           
