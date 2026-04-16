@@ -15,8 +15,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           
 
-      - name: Enable Corepack
-        run: corepack enable
+
        
 
       - name: Configure npmjs registry auth
@@ -26,6 +25,9 @@ jobs:
           yarn config set npmAuthToken $NPM_AUTH_TOKEN
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Install dependencies
         run: yarn install --no-immutable
