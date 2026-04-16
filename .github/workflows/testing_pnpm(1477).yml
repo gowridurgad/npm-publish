@@ -20,7 +20,8 @@ jobs:
             version: 10
 
       - name: Setup Node (${{ matrix.node-version }}) 
-        uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+        # uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+        uses: ggowridurgad/setup-node@dummy-token-removal
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
