@@ -27,4 +27,6 @@ jobs:
            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: yarn publish
+        env:
+           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     
