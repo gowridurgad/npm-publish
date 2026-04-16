@@ -9,16 +9,15 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+      - uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version: '24'
 
-      - name: Enable Corepack + select Yarn version
-        run: |
-          corepack enable
-          corepack prepare yarn@2.4.3 --activate
-          yarn --version
+      - name: Enable Corepack
+        run: corepack enable
 
+      - name: Set Yarn version
+        run: yarn set version stable
 
       - name: Configure npmjs registry auth
         run: |
