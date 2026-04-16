@@ -21,6 +21,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
 
-      - name: npm install (this will fail without dummy token)
+      - name: npm install 
         run: npm install
         
