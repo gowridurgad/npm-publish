@@ -20,7 +20,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
         
       - name: pnpm install 
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
 
 
