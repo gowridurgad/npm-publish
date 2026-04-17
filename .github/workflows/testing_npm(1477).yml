@@ -1,4 +1,4 @@
-name: testingnpm(1477)
+name: testing-npm(1477)
 
 on:
   workflow_dispatch:
