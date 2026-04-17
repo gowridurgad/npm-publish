@@ -5,10 +5,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
         
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v6
         with:
             version: 10
@@ -17,10 +17,11 @@ jobs:
         uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
           node-version: '24'
-          registry-url: 'https://npm.pkg.github.com'
+          registry-url: 'https://registry.npmjs.org'
         
-      - run: pnpm publish
-        env:
-           NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+      - name: pnpm install 
+        run: pnpm install
 
 
+
+          
