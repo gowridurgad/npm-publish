@@ -15,6 +15,10 @@ jobs:
         
     steps:
       - uses: actions/checkout@v6
+      - name: Update yarn
+        run: yarn set version 3.6.4
+      - name: Yarn version
+        run: yarn --version
 
       - name: Setup Node (${{ matrix.node-version }})
         uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
