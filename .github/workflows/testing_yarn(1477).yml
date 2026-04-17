@@ -28,7 +28,7 @@ jobs:
           cache: 'yarn'
 
       - name: yarn install 
-        run: yarn add lodash --dry-run
+        run: yarn install
 
 
         
