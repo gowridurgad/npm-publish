@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - name: Update yarn
+        run: yarn set version 3.6.4
 
       - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440  
         with:
