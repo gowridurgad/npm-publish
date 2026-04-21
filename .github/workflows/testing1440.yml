@@ -22,4 +22,4 @@ jobs:
       - name: Install dependencies
         run: yarn install --no-immutable
 
-      - run: yarn publish
+      - run: yarn npm publish
