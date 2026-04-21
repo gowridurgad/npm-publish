@@ -19,7 +19,17 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
           cache: 'yarn'
+
+        
+      - name: Configure npmjs registry auth
+        run: |
+          yarn config set npmRegistryServer "https://registry.npmjs.org"
+          yarn config set npmAlwaysAuth true
+          yarn config set npmAuthToken $NPM_AUTH_TOKEN
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
       - name: Install dependencies
         run: yarn install --no-immutable
 
-      - run: yarn npm publish
+      - run: yarn publish
