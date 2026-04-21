@@ -11,25 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Update yarn
-        run: yarn set version 2.4.3
-
+      - uses: pnpm/action-setup@v5
+        with:
+            version: 10
+     
       - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440  
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-          cache: 'yarn'
+          cache: 'pnpm'
 
-        
-      - name: Configure npmjs registry auth
-        run: |
-          yarn config set npmRegistryServer "https://registry.npmjs.org"
-          yarn config set npmAlwaysAuth true
-          yarn config set npmAuthToken $NPM_AUTH_TOKEN
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          
-      - name: Install dependencies
-        run: yarn install --no-immutable
-
-      - run: yarn npm publish
+      - run: pnpm publish
