@@ -33,4 +33,4 @@ jobs:
       - name: Install dependencies
         run: yarn install --no-immutable
 
-      - run: yarn npm publish
+      - run: yarn npm publish --access public
