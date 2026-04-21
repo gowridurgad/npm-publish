@@ -1,4 +1,4 @@
-name: testing_npm(1477)
+name: testing_1477_oidc
 on:
   workflow_dispatch:
 
