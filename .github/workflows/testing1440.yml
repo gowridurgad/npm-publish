@@ -1,4 +1,4 @@
-name: testing1440
+name: testing_npm(1477)
 on:
   workflow_dispatch:
 
@@ -11,16 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
-        with:
-            version: 10
 
-      - uses: actions/setup-node@v6
+      - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440  
         with:
           node-version: '24'
-          check-latest: true
           registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
-      - run: pnpm install
-      
-      - run: npm publish --access=public
+          cache: 'npm'
+
+      - run: npm publish
