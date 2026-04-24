@@ -21,7 +21,7 @@ jobs:
      # Use a read-only token for installing dependencies
       - run: npm ci
         env:
-           NODE_AUTH_TOKEN: ${{ secrets.NPM_READ_TOKEN }}
+           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_READ }}
 
     # Publish uses OIDC - no token needed
       - run: npm publish     
