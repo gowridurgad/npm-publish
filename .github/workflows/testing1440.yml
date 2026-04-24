@@ -2,9 +2,9 @@ name: testing_1477_oidc
 on:
   workflow_dispatch:
 
-# permissions:
-#   contents: read
-#   id-token: write
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   publish:
@@ -18,7 +18,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
-      - run: npm publish
+     # Use a read-only token for installing dependencies
+      - run: npm ci
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_READ }}
-        
+           NODE_AUTH_TOKEN: ${{ secrets.NPM_READ_TOKEN }}
+
+    # Publish uses OIDC - no token needed
+      - run: npm publish     
+ 
