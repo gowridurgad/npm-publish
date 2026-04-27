@@ -3,6 +3,11 @@ on:
   workflow_dispatch:
 
 
+permissions:
+  contents: read
+  id-token: write
+
+
 jobs:
   publish:
     runs-on: ubuntu-latest
