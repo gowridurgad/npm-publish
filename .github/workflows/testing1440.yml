@@ -18,11 +18,12 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
-     # Use a read-only token for installing dependencies
-      - run: npm ci
-        env:
-           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_READ }}
+     # # Use a read-only token for installing dependencies
+     #  - run: npm ci
+       
 
     # Publish uses OIDC - no token needed
       - run: npm publish
+        env:
+           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
  
