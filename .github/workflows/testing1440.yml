@@ -2,9 +2,6 @@ name: testing_1477_oidc
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-  id-token: write
 
 jobs:
   publish:
