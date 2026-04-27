@@ -25,7 +25,7 @@ jobs:
        
 
     # Publish uses OIDC - no token needed
-      - run: npm publish --dry-run --loglevel verbose
+      - run: npm publish --loglevel verbose
         env:
            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
  
