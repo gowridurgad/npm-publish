@@ -25,7 +25,7 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version: '24'
-        cache: yarn
+       
        
 
     - name: Normalize runner architecture
@@ -38,11 +38,11 @@ jobs:
       run: echo "path=$(yarn cache dir)" >> $GITHUB_OUTPUT 
       
     
-    # - name: Restore Node cache
-    #   uses: actions/cache/restore@v5
-    #   with:
-    #      path: ${{ steps.cachepath.outputs.path }}
-    #      key: node-cache-${{ runner.os }}-${{ env.ARCH }}-yarn-${{ hashFiles('**/yarn.lock') }}
+    - name: Restore Node cache
+      uses: actions/cache/restore@v5
+      with:
+         path: ${{ steps.cachepath.outputs.path }}
+         key: node-cache-${{ runner.os }}-${{ env.ARCH }}-yarn-${{ hashFiles('**/yarn.lock') }}
     - run:  yarn install --frozen-lockfile
 
     
