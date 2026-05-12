@@ -25,7 +25,7 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version: '24'
-        # cache: npm
+        cache: pnpm
 
     - name: Normalize runner architecture
       shell: bash
@@ -34,16 +34,16 @@ jobs:
     - name: Output of cache path
       id: cachepath
       shell: bash
-      run: echo "path=$(npm config get cache)" >> $GITHUB_OUTPUT
+      run: echo "path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
       
     
-    - name: Restore Node cache
-      uses: actions/cache/restore@v5
-      with:
-         path: ${{ steps.cachepath.outputs.path }}
-         key: node-cache-${{ runner.os }}-${{ env.ARCH }}-npm-${{ hashFiles('**/package-lock.json') }}
+    # - name: Restore Node cache
+    #   uses: actions/cache/restore@v5
+    #   with:
+    #      path: ${{ steps.cachepath.outputs.path }}
+    #      key: node-cache-${{ runner.os }}-${{ env.ARCH }}-npm-${{ hashFiles('**/package-lock.json') }}
 
-    - run: npm install
+    - run: pnpm install --frozen-lockfile
 
     
 
