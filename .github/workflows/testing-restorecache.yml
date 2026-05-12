@@ -36,11 +36,13 @@ jobs:
       run: echo "path=$(npm config get cache)" >> $GITHUB_OUTPUT
       
     
-    - name: Restore Node cache
-      uses: actions/cache/restore@v5
-      with:
-         path: ${{ steps.cachepath.outputs.path }}
-         key: node-cache-${{ runner.os }}-${{ env.ARCH }}-npm-${{ hashFiles('**/package-lock.json') }}
+    # - name: Restore Node cache
+    #   uses: actions/cache/restore@v5
+    #   with:
+    #      path: ${{ steps.cachepath.outputs.path }}
+    #      key: node-cache-${{ runner.os }}-${{ env.ARCH }}-npm-${{ hashFiles('**/package-lock.json') }}
+
+    - run: npm install
 
     
     - run: npm ci
