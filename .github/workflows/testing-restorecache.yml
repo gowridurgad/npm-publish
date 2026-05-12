@@ -1,0 +1,46 @@
+name: Test restore cache
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+     
+        os: ['ubuntu-latest','macos-latest','windows-latest', 'ubuntu-24.04-arm', 'windows-11-arm', 'macos-15-intel']
+
+       
+    runs-on: ${{ matrix.os }}
+   
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - uses: pnpm/action-setup@v6 
+      with:
+       version: 10
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+
+    - name: Normalize runner architecture
+      shell: bash
+      run: echo "ARCH=$(echo '${{ runner.arch }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+    
+    - name: Output of cache path
+      id: cachepath
+      shell: bash
+      run: echo "path=$(npm config get cache)" >> $GITHUB_OUTPUT
+      
+    
+    - name: Restore Node cache
+      uses: actions/cache/restore@v5
+      with:
+         path: ${{ steps.cachepath.outputs.path }}
+         key: node-cache-${{ runner.os }}-${{ env.ARCH }}-npm-${{ hashFiles('**/package-lock.json') }}
+
+    
+    - run: npm ci
