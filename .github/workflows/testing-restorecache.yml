@@ -17,15 +17,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v6
 
-    - uses: pnpm/action-setup@v6 
-      with:
-       version: 10
+    # - uses: pnpm/action-setup@v6 
+    #   with:
+    #    version: 10
 
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
         node-version: '24'
-       
        
 
     - name: Normalize runner architecture
@@ -35,15 +34,12 @@ jobs:
     - name: Output of cache path
       id: cachepath
       shell: bash
-      run: echo "path=$(yarn cache dir)" >> $GITHUB_OUTPUT 
+      run: echo "path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
       
     
     - name: Restore Node cache
       uses: actions/cache/restore@v5
       with:
          path: ${{ steps.cachepath.outputs.path }}
-         key: node-cache-${{ runner.os }}-${{ env.ARCH }}-yarn-${{ hashFiles('**/yarn.lock') }}
-    - run:  yarn install --frozen-lockfile
-
-    
-
+         key: node-cache-${{ runner.os }}-${{ env.ARCH }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+    - run: pnpm install --frozen-lockfile
