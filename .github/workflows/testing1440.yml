@@ -3,24 +3,28 @@ on:
   workflow_dispatch:
 
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: release
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440  
-        with:
-          node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
-
-     # # Use a read-only token for installing dependencies
-     #  - run: npm ci
-       
-
-    # Publish uses OIDC - no token needed
-      - run: npm publish --loglevel verbose
-        env:
-           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}          
- 
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    
+    - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+    
+    - name: Use Node.js 24
+      uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+      with:
+        node-version: "24"
+        registry-url: "https://registry.npmjs.org"
+        package-manager-cache: false
+    
+    - run: pnpm install
+    - run: pnpm build
+    
+    - name: Publish
+      run: pnpm publish --recursive --no-git-checks --verbose
