@@ -13,8 +13,7 @@ jobs:
     environment: release
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-    
-    - uses: pnpm/action-setup@08c4be7e2e672a47d11bd04269e27e5f3e8529cb # v6.0.0
+  
     
     - name: Use Node.js 24
       uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
@@ -23,7 +22,7 @@ jobs:
         registry-url: "https://registry.npmjs.org"
         package-manager-cache: false
     
-    - run: pnpm install
+    - run: yarn install --frozen-lockfile
     
     - name: Publish
-      run: pnpm publish --recursive --no-git-checks --verbose
+      run: yarn publish 
