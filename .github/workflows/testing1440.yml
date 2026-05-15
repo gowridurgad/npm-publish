@@ -22,7 +22,7 @@ jobs:
         node-version: "24"
         registry-url: "https://registry.npmjs.org"
         cache: pnpm
-        package-manager-cache: false
+        package-manager-cache: true
     
     - run: pnpm install
     - run: pnpm build
