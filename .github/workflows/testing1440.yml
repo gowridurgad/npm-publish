@@ -25,6 +25,8 @@ jobs:
         package-manager-cache: false
     
     - run: pnpm install
+    - run: pnpm build
+    - run: pnpm test
     
     - name: Publish
       run: pnpm publish --recursive --no-git-checks --verbose
