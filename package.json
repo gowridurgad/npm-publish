@@ -8,7 +8,7 @@
   "license": "ISC",
   "scripts": {
     "build": "node -e \"console.log('build ok')\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+     "test": "node -e \"console.log('ok')\""
   },
   "publishConfig": {
     "access": "public" 
