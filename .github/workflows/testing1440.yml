@@ -30,7 +30,5 @@ jobs:
       - name: Install dependencies
         run: yarn install --no-immutable
 
-    
-
       - name: Publish
         run: yarn npm publish --access public --loglevel verbose
