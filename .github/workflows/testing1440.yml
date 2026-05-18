@@ -12,43 +12,31 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/checkout@v6
-        with:
-          repository: gowridurgad/cli
-          ref: testing-oidc
-          path: npm-cli
-
-      - name: Update yarn
-        run: yarn set version 2.4.3
-
-
-      - uses: actions/setup-node@v6
+      - name: Setup Node
+        uses: actions/setup-node@v6
         with:
           node-version: '24'
-          registry-url: "https://registry.npmjs.org"
-          cache: yarn
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Configure npmjs registry auth
+      - name: Enable Corepack and set Yarn version
         run: |
-          yarn config set npmRegistryServer "https://registry.npmjs.org"
-          yarn config set npmAlwaysAuth true
-          yarn config set npmAuthToken $NPM_AUTH_TOKEN
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          corepack enable
+          yarn set version stable
 
-      # Install your modified npm CLI
-      - name: Install modified npm CLI
-        run: |
-          cd npm-cli
-          npm install
-          npm link
+      - name: Check Yarn version
+        run: yarn --version
 
       - name: Install dependencies
-        run: yarn install --no-immutable
+        run: yarn install
 
-      - run: yarn npm publish 
-        env:
-          YARN_ENABLE_INLINE_BUILDS: true
-          DEBUG: '*'
-        
+      - name: Debug - show package.json
+        run: cat package.json
 
+      - name: Debug - check env vars
+        run: |
+          echo "CI=$CI"
+          echo "GITHUB_ACTIONS=$GITHUB_ACTIONS"
+          echo "ACTIONS_ID_TOKEN_REQUEST_URL is set: ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL != '' }}"
+
+      - name: Publish
+        run: yarn npm publish --access public
