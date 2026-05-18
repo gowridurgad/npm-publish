@@ -13,27 +13,21 @@ jobs:
     steps:
       - name: Checkout package to publish
         uses: actions/checkout@v4
-        with:
-          path: package   # ← your repro-setup-node-oidc package lives here
 
-      - name: Checkout custom npm-cli fork (for logging)
+      - name: Checkout custom npm-cli fork
         uses: actions/checkout@v4
         with:
           repository: chiranjib-swain/npm-cli
           ref: envReplace
-          path: npm-cli   # ← forked npm CLI lives here
+          path: npm-cli  
 
       - name: Set up Node.js 24 with registry-url
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '24'
           registry-url: 'https://npm.pkg.github.com'
 
-      - name: Install & link custom npm CLI
-        run: |
-          cd npm-cli
-          npm install
-          npm install -g .  # Link the custom npm CLI globally
+    
       - name: Show environment state before publish
         run: |
           echo "=== Token State ==="
@@ -46,10 +40,11 @@ jobs:
           echo "=== OIDC Env Vars ==="
           echo "ACTIONS_ID_TOKEN_REQUEST_URL=${ACTIONS_ID_TOKEN_REQUEST_URL:-(not set)}"
           echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN=${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-(not set)}"
-      - name: Run npm publish with verbose logging        # ← key fix here
-        working-directory: package
+          
+      - name: Run npm publish with verbose logging       
         run: |
           npm publish --access public --provenance --loglevel verbose 2>&1 | tee /tmp/publish.log || true
+          
       - name: Extract DETECT log lines only
         run: |
           echo "=== DETECTION LOG LINES ==="
