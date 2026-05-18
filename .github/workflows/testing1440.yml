@@ -27,7 +27,7 @@ jobs:
         run: yarn --version
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --no-immutable
 
       - name: Debug - show package.json
         run: cat package.json
