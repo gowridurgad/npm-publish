@@ -1,5 +1,5 @@
 {
-  "name": "@gowridurgad/npmpublish",
+  "name": "@gowri48/npmpublish",
   "version": "1.5.1",
   "description": "Your package description",
   "main": "index.js",
@@ -11,8 +11,8 @@
      "test": "node -e \"console.log('ok')\""
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
+    
   },
   "dependencies": {
     "axios": "^1.7.0"
