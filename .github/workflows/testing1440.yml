@@ -12,47 +12,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout package to publish
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       
+
+      - name: Checkout custom npm-cli fork (for logging)
+        uses: actions/checkout@v6
+        with:
+          repository: gowridurgad/npm-cli
+          ref: testing-oidc
+          path: npm-cli  
+
       - name: Set up Node.js 24 with registry-url
         uses: actions/setup-node@v6
         with:
           node-version: '24'
-          registry-url: 'https://npm.pkg.github.com'
+          registry-url: 'https://registry.npmjs.org'
 
+      - name: Publish with verbose logs
+        run: npm publish --access public --provenance --loglevel verbose
      
-      - name: Before publish - Check state
-        run: |
-            echo "=== .npmrc contents ==="
-            cat "$NPM_CONFIG_USERCONFIG"
-            echo ""
-            echo "=== NODE_AUTH_TOKEN ==="
-            echo "$NODE_AUTH_TOKEN"
-            echo ""
-            echo "=== OIDC environment variables ==="
-            echo "ACTIONS_ID_TOKEN_REQUEST_URL: $ACTIONS_ID_TOKEN_REQUEST_URL"
-            echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN exists: $([ -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ] && echo 'yes' || echo 'no')"
-            echo ""
-            echo "=== npm config list ==="
-            npm config list
-
-          
-      - name: Run npm publish with verbose logging      
-        run: |
-           npm publish --access public --provenance --loglevel verbose
-
-
-      - name: Before publish - Check state
-        run: |
-            echo "=== .npmrc contents ==="
-            cat "$NPM_CONFIG_USERCONFIG"
-            echo ""
-            echo "=== NODE_AUTH_TOKEN ==="
-            echo "$NODE_AUTH_TOKEN"
-            echo ""
-            echo "=== OIDC environment variables ==="
-            echo "ACTIONS_ID_TOKEN_REQUEST_URL: $ACTIONS_ID_TOKEN_REQUEST_URL"
-            echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN exists: $([ -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ] && echo 'yes' || echo 'no')"
-            echo ""
-            echo "=== npm config list ==="
-            npm config list
