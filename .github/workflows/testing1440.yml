@@ -33,4 +33,4 @@ jobs:
           npm link
         
 
-      - run: yarn publish --access public --provenance --no-git-checks --loglevel verbose
+      - run: yarn npm publish --access public --provenance --no-git-checks --loglevel verbose
