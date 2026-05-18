@@ -1,6 +1,6 @@
 {
   "name": "@gowri48/npmpublish",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "description": "Your package description",
   "main": "index.js",
   "repository": "github:gowridurgad/npm-publish",
@@ -18,6 +18,5 @@
   },
   "engines": {
     "node": ">=12"
-  },
-    "packageManager": "pnpm@10.25.0"
+  }
 }
