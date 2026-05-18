@@ -11,10 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
+          cache: npm
         
       - name: Print .npmrc contents
         run: |
@@ -29,4 +30,15 @@ jobs:
           
       - run: npm install -g npm@latest --force  # ensure 11.5.1+
       - run: npm publish --dry-run 
-       
+      - name: Print .npmrc contents
+        run: |
+          echo "=== .npmrc location ==="
+          echo "NPM_CONFIG_USERCONFIG: $NPM_CONFIG_USERCONFIG"
+          echo ""
+          echo "=== .npmrc contents ==="
+          cat "$NPM_CONFIG_USERCONFIG" || cat ~/.npmrc || echo "No .npmrc found"
+          echo ""
+          echo "=== NODE_AUTH_TOKEN value ==="
+          echo "NODE_AUTH_TOKEN: $NODE_AUTH_TOKEN"
+
+     
