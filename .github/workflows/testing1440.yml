@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
+          cache : yarn
 
       - name: Enable Corepack and set Yarn version
         run: |
@@ -29,14 +30,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --no-immutable
 
-      - name: Debug - show package.json
-        run: cat package.json
-
-      - name: Debug - check env vars
-        run: |
-          echo "CI=$CI"
-          echo "GITHUB_ACTIONS=$GITHUB_ACTIONS"
-          echo "ACTIONS_ID_TOKEN_REQUEST_URL is set: ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL != '' }}"
+    
 
       - name: Publish
-        run: yarn npm publish --access public
+        run: yarn npm publish --access public --loglevel verbose
