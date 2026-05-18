@@ -31,4 +31,4 @@ jobs:
         run: yarn install --no-immutable
 
       - name: Publish
-        run: yarn npm publish --access public --loglevel verbose
+        run: yarn npm publish --access public 
