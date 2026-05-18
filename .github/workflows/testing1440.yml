@@ -18,6 +18,9 @@ jobs:
           ref: testing-oidc
           path: npm-cli
 
+      - name: Update yarn
+        run: yarn set version 2.4.3
+
 
       - uses: actions/setup-node@v6
         with:
@@ -25,12 +28,24 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: yarn
 
+      - name: Configure npmjs registry auth
+        run: |
+          yarn config set npmRegistryServer "https://registry.npmjs.org"
+          yarn config set npmAlwaysAuth true
+          yarn config set npmAuthToken $NPM_AUTH_TOKEN
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       # Install your modified npm CLI
       - name: Install modified npm CLI
         run: |
           cd npm-cli
           npm install
           npm link
+
+      - name: Install dependencies
+        run: yarn install --no-immutable
+
+      - run: yarn npm publish --loglevel verbose
         
 
-      - run: yarn publish --access public  --loglevel verbose
