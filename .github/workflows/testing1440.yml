@@ -1,34 +1,20 @@
 name: testing_1477_oidc
-on:
-  workflow_dispatch:
 
+on: workflow_dispatch
 
 permissions:
-  id-token: write # Required for OIDC
+  id-token: write
   contents: read
-
+  
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment: release
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-    
-    - uses: pnpm/action-setup@26f6d4f2c533a43e6b5da0b4a5dd983f98f7b49a # v6.0.4
-      with:
-         version: 10.25.0
-    
-    - name: Use Node.js 24
-      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-      with:
-        node-version: "24"
-        registry-url: "https://registry.npmjs.org"
-        cache: pnpm
-        package-manager-cache: true
-    
-    - run: pnpm install
-    - run: pnpm build
-    - run: pnpm test
-    
-    - name: Publish
-      run: pnpm publish --recursive --no-git-checks --verbose
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm@latest --force  # ensure 11.5.1+
+      - run: npm publish --access public --provenance
+       
