@@ -18,6 +18,10 @@ jobs:
           ref: testing-oidc
           path: npm-cli
 
+      - uses: pnpm/action-setup@v6
+        with:
+           version: 10
+
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
@@ -32,4 +36,4 @@ jobs:
           npm link
         
 
-      - run: npm publish --access public --provenance --loglevel verbose
+      - run: pnpm publish --access public --provenance --loglevel verbose
