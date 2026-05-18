@@ -21,13 +21,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-          registry-url: 'https://npm.pkg.github.com'
-
-      # Check .npmrc BEFORE npm link
-      - name: Check .npmrc before npm link
-        run: |
-          echo "=== BEFORE npm link ==="
-          cat "$NPM_CONFIG_USERCONFIG"
+          registry-url: "https://registry.npmjs.org"
 
       # Install your modified npm CLI
       - name: Install modified npm CLI
@@ -35,20 +29,6 @@ jobs:
           cd npm-cli
           npm install
           npm link
-
-      # Check .npmrc AFTER npm link
-      - name: Check .npmrc after npm link
-        run: |
-          echo "=== AFTER npm link ==="
-          cat "$NPM_CONFIG_USERCONFIG"
-          echo ""
-          echo "=== NPM config registry ==="
-          npm config get registry
-          npm config get @gowridurgad:registry
-
-      - name: Verify npm version
-        run: |
-          which npm
-          npm --version
+        
 
       - run: npm publish --access public --provenance --loglevel verbose
