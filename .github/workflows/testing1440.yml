@@ -36,4 +36,4 @@ jobs:
           npm link
         
 
-      - run: pnpm publish --access public --provenance --loglevel verbose
+      - run: pnpm publish --access public --provenance --no-git-checks --loglevel verbose
