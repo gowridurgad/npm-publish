@@ -1,35 +1,62 @@
 name: testing_1477_oidc
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 permissions:
-  id-token: write
   contents: read
-  
+  id-token: write  # Required to trigger OIDC token exchange
+
 jobs:
-  publish:
+  detect-oidc-precedence:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v6
+      - name: Checkout package to publish
+        uses: actions/checkout@v4
+        with:
+          path: package   # ← your repro-setup-node-oidc package lives here
+
+      - name: Checkout custom npm-cli fork (for logging)
+        uses: actions/checkout@v4
+        with:
+          repository: chiranjib-swain/npm-cli
+          ref: envReplace
+          path: npm-cli   # ← forked npm CLI lives here
+
+      - name: Set up Node.js 24 with registry-url
+        uses: actions/setup-node@v4
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-          cache: npm
-        
-      - name: Print .npmrc contents
-        run: |
-          echo "=== .npmrc location ==="
-          echo "NPM_CONFIG_USERCONFIG: $NPM_CONFIG_USERCONFIG"
-          echo ""
-          echo "=== .npmrc contents ==="
-          cat "$NPM_CONFIG_USERCONFIG" || cat ~/.npmrc || echo "No .npmrc found"
-          echo ""
-          echo "=== NODE_AUTH_TOKEN value ==="
-          echo "NODE_AUTH_TOKEN: $NODE_AUTH_TOKEN"
-          
-      - run: npm install -g npm@latest --force  # ensure 11.5.1+
-      - run: npm publish --dry-run --loglevel silly
-   
+          registry-url: 'https://npm.pkg.github.com'
 
-     
+      - name: Install & link custom npm CLI
+        run: |
+          cd npm-cli
+          npm install
+          npm install -g .  # Link the custom npm CLI globally
+      - name: Show environment state before publish
+        run: |
+          echo "=== Token State ==="
+          echo "NODE_AUTH_TOKEN=${NODE_AUTH_TOKEN}"
+          echo "NPM_CONFIG_USERCONFIG=${NPM_CONFIG_USERCONFIG}"
+          echo ""
+          echo "=== .npmrc Contents ==="
+          cat "${NPM_CONFIG_USERCONFIG}"
+          echo ""
+          echo "=== OIDC Env Vars ==="
+          echo "ACTIONS_ID_TOKEN_REQUEST_URL=${ACTIONS_ID_TOKEN_REQUEST_URL:-(not set)}"
+          echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN=${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-(not set)}"
+      - name: Run npm publish with verbose logging        # ← key fix here
+        working-directory: package
+        run: |
+          npm publish --access public --provenance --loglevel verbose 2>&1 | tee /tmp/publish.log || true
+      - name: Extract DETECT log lines only
+        run: |
+          echo "=== DETECTION LOG LINES ==="
+          grep "\[DETECT\]" /tmp/publish.log || echo "No [DETECT] lines found"
+          echo ""
+          echo "=== OIDC-related lines ==="
+          grep -i "oidc" /tmp/publish.log || echo "No OIDC lines found"
+          echo ""
+          echo "=== Auth error lines ==="
+          grep -E "E401|ENEEDAUTH|401 Unauthorized" /tmp/publish.log || echo "No auth errors found"
