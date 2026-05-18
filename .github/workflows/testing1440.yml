@@ -1,33 +1,40 @@
-name: testing_1477_oidc
-
+name: testing_npm(1477)
 on:
   workflow_dispatch:
 
 permissions:
   contents: read
-  id-token: write  # Required to trigger OIDC token exchange
+  id-token: write
 
 jobs:
-  detect-oidc-precedence:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout package to publish
-        uses: actions/checkout@v6
-      
+      - uses: actions/checkout@v4
 
-      - name: Checkout custom npm-cli fork (for logging)
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           repository: gowridurgad/cli
           ref: testing-oidc
-          path: npm-cli  
+          path: npm-cli
 
-      - name: Set up Node.js 24 with registry-url
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v4
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Publish with verbose logs
-        run: npm publish --access public --provenance --loglevel verbose
-     
+      # Install your modified npm CLI
+      - name: Install modified npm CLI
+        run: |
+          cd npm-cli
+          npm install
+          npm link
+
+      # Verify modified npm is being used
+      - name: Verify npm version
+        run: |
+          which npm
+          npm --version
+
+      # Run with verbose to see the logs
+      - run: npm publish --access public --provenance --loglevel verbose
