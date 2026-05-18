@@ -15,6 +15,10 @@ jobs:
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
+        
+      - run: |
+          echo "===== .npmrc ====="
+          cat ~/.npmrc || echo ".npmrc not found"
       - run: npm install -g npm@latest --force  # ensure 11.5.1+
-      - run: npm publish --access public --provenance
+      - run: npm publish --dry-run 
        
