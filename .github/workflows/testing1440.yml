@@ -22,6 +22,7 @@ jobs:
         with:
           node-version: '24'
           registry-url: "https://registry.npmjs.org"
+          cache: npm
 
       # Install your modified npm CLI
       - name: Install modified npm CLI
