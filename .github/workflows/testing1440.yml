@@ -18,7 +18,7 @@ jobs:
           ref: testing-oidc
           path: npm-cli
 
-      - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+      - uses: gowridurgad/setup-node@fix/registrylogic-update
         with:
           node-version: '24'
           registry-url: "https://registry.npmjs.org"
