@@ -15,13 +15,9 @@ jobs:
 
       - uses: gowridurgad/setup-node@registrylogic-update
         with:
-          node-version: '22'
+          node-version: '24'
           registry-url: "https://registry.npmjs.org"
           cache: npm
 
-      - name: Install latest npm
-        run: |
-          corepack enable npm
-          corepack install -g npm@latest
         
       - run: npm publish 
