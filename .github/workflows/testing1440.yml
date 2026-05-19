@@ -31,4 +31,4 @@ jobs:
           npm install
           npm link
         
-      - run: npm publish --access public --provenance --loglevel verbos
+      - run: npm publish --access public  --loglevel verbos
