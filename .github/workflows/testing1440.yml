@@ -2,24 +2,33 @@ name: testing_oidc
 on:
   workflow_dispatch:
 
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     env:
-      NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v6
+
+      - uses: actions/checkout@v6
         with:
-           version: 11
-    
+          repository: gowridurgad/cli
+          ref: testing-oidc
+          path: npm-cli
 
       - uses: gowridurgad/setup-node@registrylogic-update
         with:
           node-version: '24'
-          registry-url: "https://npm.pkg.github.com"
-          cache: pnpm
-       
-      - run: pnpm install
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+
+      # Install your modified npm CLI
+      - name: Install modified npm CLI
+        run: |
+          cd npm-cli
+          npm install
+          npm link
         
-      - run: pnpm publish --no-git-checks
+      - run: npm publish --access public --provenance --loglevel verbos
