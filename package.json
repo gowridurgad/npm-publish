@@ -1,6 +1,6 @@
 {
   "name": "@gowri48/npmpublish",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "Your package description",
   "main": "index.js",
   "repository": "github:gowridurgad/npm-publish",
