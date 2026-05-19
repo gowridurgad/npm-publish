@@ -1,3 +1,4 @@
+
 name: testing_oidc
 
 on:
@@ -6,24 +7,20 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    
+   
+      
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+        with:
+           version: 10
 
       - uses: gowridurgad/setup-node@registrylogic-update
         with:
           node-version: '24'
           registry-url: "https://registry.npmjs.org"
-          cache: yarn
+          cache: pnpm
 
-      - name: Enable Corepack and set Yarn version
-        run: |
-          corepack enable
-          yarn set version stable
-          
-      - name: Check Yarn version
-        run: yarn --version
-
-      - run: yarn install  --no-immutable
+      - run: pnpm install
         
-      
+    
