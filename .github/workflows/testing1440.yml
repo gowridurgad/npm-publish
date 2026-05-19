@@ -13,11 +13,22 @@ jobs:
 
       - uses: gowridurgad/setup-node@registrylogic-update
         with:
-          node-version: '26'
+          node-version: '24'
           registry-url: "https://registry.npmjs.org"
           cache: yarn
        
-      - run: yarn install --immutable
-        
-      - run: yarn publish --access public
+      
+      - name: Enable Corepack and set Yarn version
+        run: |
+          corepack enable
+          yarn set version stable
+          
+      - name: Check Yarn version
+        run: yarn --version
+
+      - name: Install dependencies
+        run: yarn install --no-immutable
+
+      - name: Publish
+        run: yarn npm publish --access public 
        
