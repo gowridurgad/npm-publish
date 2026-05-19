@@ -19,4 +19,4 @@ jobs:
           cache: npm
 
       - run: npm install
-      - run: npm publish --access public --provenance --loglevel verbose
+      - run: npm publish 
