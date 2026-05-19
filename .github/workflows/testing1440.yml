@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - run: npm install -g npm@latest --force  # ensure 11.5.1+
 
       - uses: gowridurgad/setup-node@registrylogic-update
         with:
@@ -18,5 +19,5 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: npm
 
-      - run: npm install -g npm@latest --force  # ensure 11.5.1+
+     
       - run: npm publish 
