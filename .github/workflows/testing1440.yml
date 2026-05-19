@@ -9,28 +9,17 @@ jobs:
       NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+        with:
+           version: 10
     
 
       - uses: gowridurgad/setup-node@registrylogic-update
         with:
           node-version: '24'
           registry-url: "https://npm.pkg.github.com"
-          cache: yarn
+          cache: pnpm
        
-      - name: Enable Corepack and set Yarn version
-        run: |
-          corepack enable
-          yarn set version stable
-          
-      - name: Check Yarn version
-        run: yarn --version
-
-      - name: Configure Yarn authentication
-        run: |
-           yarn config set 'npmScopes["gowridurgad"].npmRegistryServer' "https://npm.pkg.github.com"
-           yarn config set 'npmScopes["gowridurgad"].npmAuthToken' "${{ secrets.TOKEN_GITHUB }}"
-           yarn config set 'npmScopes["gowridurgad"].npmPublishRegistry' "https://npm.pkg.github.com"
-
-      - run: yarn install  --no-immutable
+      - run: pnpm install
         
-      - run: yarn npm publish 
+      - run: pnpm publish --no-git-checks
