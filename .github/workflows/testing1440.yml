@@ -20,6 +20,8 @@ jobs:
           cache: npm
 
       - name: Install latest npm
-        run: npm install -g npm@latest
+        run: |
+          corepack enable npm
+          corepack install -g npm@latest
         
       - run: npm publish 
