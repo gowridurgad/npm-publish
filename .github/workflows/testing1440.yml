@@ -29,6 +29,7 @@ jobs:
         run: |
            yarn config set 'npmScopes["gowridurgad"].npmRegistryServer' "https://npm.pkg.github.com"
            yarn config set 'npmScopes["gowridurgad"].npmAuthToken' "${{ secrets.TOKEN_GITHUB }}"
+           yarn config set 'npmScopes["gowridurgad"].npmPublishRegistry' "https://npm.pkg.github.com"
 
       - run: yarn install  --no-immutable
         
