@@ -12,23 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/checkout@v6
-        with:
-          repository: gowridurgad/cli
-          ref: testing-oidc
-          path: npm-cli
-
       - uses: gowridurgad/setup-node@registrylogic-update
         with:
-          node-version: '24'
+          node-version: '22'
           registry-url: "https://registry.npmjs.org"
           cache: npm
 
-      # Install your modified npm CLI
-      - name: Install modified npm CLI
-        run: |
-          cd npm-cli
-          npm install
-          npm link
-        
+      - run: npm install
       - run: npm publish --access public --provenance --loglevel verbose
