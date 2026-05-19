@@ -12,23 +12,23 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - uses: actions/checkout@v6
+        with:
+          repository: gowridurgad/cli
+          ref: testing-oidc
+          path: npm-cli
+
+      - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-          cache : yarn
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
 
-      - name: Enable Corepack and set Yarn version
+      # Install your modified npm CLI
+      - name: Install modified npm CLI
         run: |
-          corepack enable
-          yarn set version stable
-
-      - name: Check Yarn version
-        run: yarn --version
-
-      - name: Install dependencies
-        run: yarn install --no-immutable
-
-      - name: Publish
-        run: yarn npm publish --access public 
+          cd npm-cli
+          npm install
+          npm link
+        
+      - run: npm publish --access public --provenance --loglevel verbose
