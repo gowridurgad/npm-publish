@@ -20,6 +20,12 @@ jobs:
           cache: npm
           auth-token-line: 'false'
 
+      - name: Print .npmrc contents
+        run: cat "${NPM_CONFIG_USERCONFIG}"
+
       - run: npm install
         
       - run: npm publish 
+
+      - name: Print .npmrc contents
+        run: cat "${NPM_CONFIG_USERCONFIG}"
