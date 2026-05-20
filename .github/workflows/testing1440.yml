@@ -18,7 +18,7 @@ jobs:
           node-version: '24'
           registry-url: "https://registry.npmjs.org"
           cache: yarn
-          auth-token-line: 'false'
+          
      
 
       - name: Enable Corepack and set Yarn version
