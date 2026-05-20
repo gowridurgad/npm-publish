@@ -5,8 +5,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+
     steps:
       - uses: actions/checkout@v6
     
@@ -15,8 +14,10 @@ jobs:
         with:
           node-version: '24'
           registry-url: "https://npm.pkg.github.com"
-          cache: yarn
+          cache: npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
        
-      - run: yarn install
+      - run: npm install
         
-      - run: yarn publish 
+      - run: npm publish 
