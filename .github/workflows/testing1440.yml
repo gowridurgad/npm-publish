@@ -13,7 +13,7 @@ jobs:
 
       - uses: gowridurgad/setup-node@auth-token
         with:
-          node-version: '24'
+          node-version: '26'
           registry-url: "https://npm.pkg.github.com"
           cache: npm
 
