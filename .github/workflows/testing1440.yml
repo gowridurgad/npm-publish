@@ -16,12 +16,5 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: yarn
 
-      - name: Enable Corepack and set Yarn version
-        run: |
-          corepack enable
-          yarn set version stable
-          
-      - name: Check Yarn version
-        run: yarn --version
 
       - run: yarn install  --no-immutable
