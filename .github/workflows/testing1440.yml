@@ -1,20 +1,25 @@
 name: testing_oidc
-
 on:
   workflow_dispatch:
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
     steps:
       - uses: actions/checkout@v6
+    
 
       - uses: gowridurgad/setup-node@auth-token
         with:
-          node-version: '24'
-          registry-url: "https://registry.npmjs.org"
-          cache: yarn
+          node-version: '22'
+          registry-url: "https://npm.pkg.github.com"
+          cache: npm
 
-
-      - run: yarn install  --no-immutable
+      - name: Print .npmrc contents
+        run: cat "${NPM_CONFIG_USERCONFIG}"
+       
+      - run: npm install
+        
+      - run: npm publish 
