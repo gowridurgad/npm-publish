@@ -6,6 +6,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
 
+    env:
+       NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+
     steps:
       - uses: actions/checkout@v6
     
@@ -16,8 +19,7 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
           cache: npm
           auth-token-line: false
-        env:
-            NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+        
        
       - run: npm install
         
