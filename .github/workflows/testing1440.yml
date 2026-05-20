@@ -16,18 +16,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: yarn
 
-      - name: Enable Corepack and set Yarn version
-        run: |
-          corepack enable
-          yarn set version stable
-      - name: Check Yarn version
-        run: yarn --version
-
-      - name: Configure npm authentication
-        run: |
-          yarn config set npmRegistryServer "https://registry.npmjs.org"
-          yarn config set npmAuthToken ${{ secrets.NPM_TOKEN }}
-
       - name: Print .npmrc contents
         run: cat "${NPM_CONFIG_USERCONFIG}"
         
@@ -35,4 +23,4 @@ jobs:
         run: yarn install --no-immutable
 
       - name: Publish
-        run: yarn npm publish --access public
+        run: yarn publish --access public
