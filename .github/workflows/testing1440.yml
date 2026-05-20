@@ -1,29 +1,27 @@
 name: testing_oidc
+
 on:
   workflow_dispatch:
-
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-  
-      
+    
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v6
-        with:
-           version: 11
 
       - uses: gowridurgad/setup-node@auth-token
         with:
           node-version: '24'
           registry-url: "https://registry.npmjs.org"
-          cache: pnpm
-         
-          
-      - name: Print .npmrc contents
-        run: cat "${NPM_CONFIG_USERCONFIG}"
+          cache: yarn
 
-      - run: pnpm install
-        
-    
+      - name: Enable Corepack and set Yarn version
+        run: |
+          corepack enable
+          yarn set version stable
+          
+      - name: Check Yarn version
+        run: yarn --version
+
+      - run: yarn install  --no-immutable
