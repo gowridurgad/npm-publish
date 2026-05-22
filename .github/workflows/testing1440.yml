@@ -12,7 +12,7 @@ jobs:
 
       - uses: gowridurgad/setup-node@removes-dummy
         with:
-          node-version: '22'
+          node-version: '24'
           registry-url: "https://npm.pkg.github.com"
           cache: npm
        
