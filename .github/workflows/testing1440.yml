@@ -10,8 +10,17 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-        env:
-          YARN_ENABLE_IMMUTABLE_INSTALLS: false
+      
+      - name: Enable Corepack
+        run: corepack enable
+
+   
+      - name: Set Yarn version
+        run: |
+          corepack prepare yarn@4.1.1 --activate
+          corepack yarn -v
+
+     
       
       - name: Enable Corepack and set Yarn version
         run: |
