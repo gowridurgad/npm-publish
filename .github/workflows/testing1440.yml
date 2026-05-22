@@ -1,4 +1,3 @@
-
 name: testing_oidc
 on:
   workflow_dispatch:
@@ -6,7 +5,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    
+  
     steps:
       - uses: actions/checkout@v6
     
@@ -17,8 +16,21 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
           cache: yarn
        
-      - run: yarn install
+      - name: Enable Corepack and set Yarn version
+        run: |
+          corepack enable
+          yarn set version stable
+          
+      - name: Check Yarn version
+        run: yarn --version
+
+      - name: Configure Yarn authentication
+        run: |
+           yarn config set 'npmScopes["gowridurgad"].npmRegistryServer' "https://npm.pkg.github.com"
+           yarn config set 'npmScopes["gowridurgad"].npmAuthToken' "${{ secrets.TOKEN_GITHUB }}"
+           yarn config set 'npmScopes["gowridurgad"].npmPublishRegistry' "https://npm.pkg.github.com"
+      - run: yarn install  --no-immutable
         
-      - run: yarn publish 
+      - run: yarn npm publish 
         env:
-         NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
