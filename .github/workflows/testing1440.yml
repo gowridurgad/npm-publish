@@ -12,17 +12,8 @@ jobs:
 
       - uses: gowridurgad/setup-node@removes-dummy
         with:
-          node-version: '24'
+          node-version: '14'
           registry-url: "https://registry.npmjs.org"
-          cache: yarn
+          cache: npm
 
-      - name: Enable Corepack and set Yarn version
-        run: |
-          corepack enable
-          yarn set version stable
-          
-      - name: Check Yarn version
-        run: yarn --version
-
-      - run: yarn install  --no-immutable
-        
+      - run: npm install
