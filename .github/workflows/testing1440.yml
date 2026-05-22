@@ -19,7 +19,7 @@ jobs:
       - name: Enable Corepack and set Yarn version
         run: |
           corepack enable
-          corepack prepare yarn@3.8.7 --activate
+          corepack prepare yarn@2.4.3 --activate
           
       - name: Check Yarn version
         run: yarn --version
