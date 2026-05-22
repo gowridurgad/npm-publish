@@ -6,18 +6,16 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-   
-      
+    
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v6
-        with:
-           version: 11
 
       - uses: gowridurgad/setup-node@removes-dummy
         with:
           node-version: '24'
           registry-url: "https://registry.npmjs.org"
-          cache: pnpm
+          cache: yarn
 
-      - run: pnpm install
+      - run: yarn install --immutable
+        
+      
