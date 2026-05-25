@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: gowridurgad/setup-node@removes-dummy
+      - uses: gowridurgad/setup-node@oidc-1
         with:
           node-version: '24'
           registry-url: "https://registry.npmjs.org"
