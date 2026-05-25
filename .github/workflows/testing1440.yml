@@ -1,24 +1,19 @@
 name: testing_oidc
+
 on:
   workflow_dispatch:
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    env:
-        NODE_AUTH_TOKEN: ${{ secrets.TOKEN_GITHUB }}
     
     steps:
       - uses: actions/checkout@v6
-    
 
-      - uses: gowridurgad/setup-node@removes-dummy
+      - uses: gowridurgad/setup-node@oidc-1
         with:
-          node-version: '24'
-          registry-url: "https://npm.pkg.github.com"
+          node-version: '22'
+          registry-url: "https://registry.npmjs.org"
           cache: npm
-       
+
       - run: npm install
-        
-      - run: npm publish 
-        
