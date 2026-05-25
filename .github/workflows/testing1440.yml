@@ -12,8 +12,12 @@ jobs:
 
       - uses: gowridurgad/setup-node@oidc-1
         with:
-          node-version: '22'
+          node-version: '24'
           registry-url: "https://registry.npmjs.org"
           cache: npm
+      - name: Print .npmrc contents
+        run: cat "${NPM_CONFIG_USERCONFIG}"
 
       - run: npm install
+      - name: Print .npmrc contents
+        run: cat "${NPM_CONFIG_USERCONFIG}"
