@@ -1,14 +1,17 @@
 name: testing_oidc
-
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v6
+    
 
       - uses: gowridurgad/setup-node@oidc-1
         with:
@@ -19,5 +22,7 @@ jobs:
         run: cat "${NPM_CONFIG_USERCONFIG}"
 
       - run: npm install
+        
+      - run: npm publish 
       - name: Print .npmrc contents
         run: cat "${NPM_CONFIG_USERCONFIG}"
