@@ -1,4 +1,5 @@
 name: testing_oidc
+
 on:
   workflow_dispatch:
 
@@ -6,22 +7,22 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
     steps:
       - uses: actions/checkout@v6
-    
+      - uses: pnpm/action-setup@v6
+        with:
+           version: 11
 
-      - uses: gowridurgad/setup-node@oidc-2
+      - uses: gowridurgad/setup-node@oidc-1
         with:
           node-version: '24'
           registry-url: "https://registry.npmjs.org"
-          cache: npm
-     
+          cache: pnpm
       - name: Print .npmrc contents
         run: cat "${NPM_CONFIG_USERCONFIG}"
 
-
-      - run: npm install
+      - run: pnpm install
         
-      - run: npm publish --access public
-        
+      - run: pnpm publish --no-git-checks
