@@ -2,24 +2,24 @@ name: testing_oidc
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v6
     
 
-      - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+      - uses: gowridurgad/setup-node@oidc-1
         with:
           node-version: '24'
-         
           cache: npm
+     
+      - name: Print .npmrc contents
+        run: cat "${NPM_CONFIG_USERCONFIG}"
 
 
       - run: npm install
         
-      - run: npm publish 
+      - run: npm publish --access public
