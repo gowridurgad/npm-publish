@@ -11,6 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
+      
+      - name: Enable Corepack and set Yarn version
+        run: |
+          corepack enable
+          yarn set version stable
+          
+      - name: Check Yarn version
+        run: yarn --version
   
  
       - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
@@ -19,13 +28,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: yarn
 
-      - name: Enable Corepack and set Yarn version
-        run: |
-          corepack enable
-          yarn set version stable
-          
-      - name: Check Yarn version
-        run: yarn --version
    
 
       - name: Install dependencies
