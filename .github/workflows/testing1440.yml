@@ -2,9 +2,9 @@ name: testing_oidc
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-  id-token: write
+# permissions:
+#   contents: read
+#   id-token: write
 
 jobs:
   publish:
@@ -33,6 +33,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --no-immutable
 
-      - name: Publish
-        run: yarn npm publish --access public 
+      # - name: Publish
+      #   run: yarn npm publish --access public 
 
