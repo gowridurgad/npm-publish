@@ -12,8 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
   
-
-      - uses: gowridurgad/setup-node@oidc-2
+ 
+      - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
           node-version: '24'
           registry-url: "https://registry.npmjs.org"
@@ -26,9 +26,7 @@ jobs:
           
       - name: Check Yarn version
         run: yarn --version
-      - name: Print .npmrc contents
-        run: cat "${NPM_CONFIG_USERCONFIG}"
-
+   
 
       - name: Install dependencies
         run: yarn install --no-immutable
@@ -36,5 +34,3 @@ jobs:
       - name: Publish
         run: yarn npm publish --access public 
 
-      - name: Print .npmrc contents
-        run: cat "${NPM_CONFIG_USERCONFIG}"
