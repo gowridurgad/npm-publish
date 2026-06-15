@@ -2,37 +2,23 @@ name: testing_oidc
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v6
-      - name: Enable Corepack and set Yarn version
-        run: |
-          corepack enable
-          yarn set version stable
-          
-      - name: Check Yarn version
-        run: yarn --version
+    
 
-      - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+      - uses: gowridurgad/setup-node@testing-1009
         with:
-          node-version: '24'
-         
-          cache: yarn
+          node-version: '24' 
+          cache: npm
 
-  
 
-      - name: Configure npm authentication
-        run: |
-          yarn config set npmRegistryServer "https://registry.npmjs.org"
-          yarn config set npmAuthToken ${{ secrets.NPM_TOKEN }}
-      
-
-      - name: Install dependencies
-        run: yarn install --no-immutable
-
-      - name: Publish
-        run: yarn npm publish --access public
+      - run: npm install
+        
+      - run: npm publish
